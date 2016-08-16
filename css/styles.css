@@ -21,6 +21,16 @@
 }
 
 
+#browse-carousel {
+    max-width: 300px;
+    margin: auto;
+}
+
+#section-watchlist li button {
+	width: 100%;
+	margin-top: 10px;
+}
+
 #section-watchlist ul {
 	text-align: center;
 }
@@ -44,4 +54,18 @@ section header {
 
 section {
 	padding: 2%;
+}
+
+ul {
+	padding:0;
+}
+
+#add-to-watchlist {
+	width:100%;
+}
+
+.well {
+	color:white;
+	background-color: red;
+	border-width: 0;
 }

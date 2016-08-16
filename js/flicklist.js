@@ -2,10 +2,11 @@
 
 var model = {
   watchlistItems: [],
-  browseItems: []
+  browseItems: [],
 
   // TODO 
   // add a property for the current active movie index
+  activeMovieIndex: 0,
 }
 
 
@@ -121,7 +122,47 @@ function render() {
 
     $("#section-watchlist ul").append(itemView);
   });
+  // fill carousel with posters
+  var posters = model.browseItems.map(function(movie) {
+    // TODO 
+    // return a list item with an img inside  
+    var poster = $("<img></img>")
+      .attr("src", api.posterUrl(movie))
+      .attr("class", "img-responsive");
+    return $("<li></li>")
+      .attr("class", "item")
+      .append(poster);
+      
+  });
+  
+  var activeMovie = model.browseItems[model.activeMovieIndex];
+  $("#browse-info h4")
+    .text(activeMovie.original_title);
+  $("#browse-info p")
+    .text(activeMovie.overview);
+  posters[model.activeMovieIndex].addClass("active");
+  $("#add-to-watchlist")
+    .unbind("click")
+    .click(function() {
+      model.watchlistItems.push(activeMovie);
+      render();
+    })
+  .prop("disabled", model.watchlistItems.indexOf(activeMovie) !== -1);
 
+
+  $("#section-browse ul").append(posters);
+
+}
+
+
+// When the HTML document is ready, we call the discoverMovies function,
+// and pass the render function as its callback
+$(document).ready(function() {
+  discoverMovies(render);
+});
+
+
+/*
   // render browse items
   model.browseItems.forEach(function(movie) {
     var title = $("<h4></h4>").text(movie.original_title);
@@ -144,11 +185,4 @@ function render() {
     // append the itemView to the list
     $("#section-browse ul").append(itemView);
   });
-}
-
-
-// When the HTML document is ready, we call the discoverMovies function,
-// and pass the render function as its callback
-$(document).ready(function() {
-  discoverMovies(render);
-});
+  */
